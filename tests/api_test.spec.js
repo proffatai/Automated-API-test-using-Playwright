@@ -14,7 +14,7 @@ test.describe('API Test', () => {
   });
 
   test('Automated CRUD operations on posts', async () => {
-    // Step 1: 
+    // Step 1: Read Total Number of Posts and Store in a Variable
     const getTotalPostsResponse = await baseAPI.get('/posts');
     expect(getTotalPostsResponse.ok()).toBeTruthy();
     const posts = await getTotalPostsResponse.json();
@@ -59,7 +59,6 @@ test.describe('API Test', () => {
     // Step 5: Delete the Created Post by ID
     const deletePostResponse = await baseAPI.delete(`/posts/${createdPostId}`);
     expect(deletePostResponse.ok()).toBeTruthy();
-
     // Verify that the post has been successfully deleted
     const getDeletedPostResponse = { status: () => 404, ok: () => false };
     expect(getDeletedPostResponse.status()).toBe(404);
