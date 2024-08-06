@@ -16,7 +16,7 @@ test.describe('API Test', () => {
   test('Automated CRUD operations on posts', async () => {
     // Step 1: Read Total Number of Posts and Store in a Variable
     const getTotalPostsResponse = await baseAPI.get('/posts');
-    expect(getTotalPostsResponse.ok()).toBeTruthy();
+    expect(getTotalPostsResponse.status()).toBe(200);
     const posts = await getTotalPostsResponse.json();
     initialTotalPosts = posts.length;
 
@@ -29,15 +29,17 @@ test.describe('API Test', () => {
     const createPostResponse = await baseAPI.post('/posts', {
       data: newPost
     });
-    expect(createPostResponse.ok()).toBeTruthy();
+    expect(createPostResponse.status()).toBe(201);
     createdPost = await createPostResponse.json();
     createdPostId = createdPost.id;
 
     // Step 3: Get Only the Created Post by ID 
     // Since the API does not persist data, we use the createdPost directly
     const getCreatedPostResponse = { status: () => 200, ok: () => true, json: async () => createdPost };
-    expect(getCreatedPostResponse.ok()).toBeTruthy();
+    console.log(getCreatedPostResponse);
+    expect(getCreatedPostResponse.status()).toBe(200);
     const createdPostDetails = await getCreatedPostResponse.json();
+    console.log(createdPostDetails);
 
     // Validate the created post details
     expect(createdPostDetails.id).toBe(createdPostId);
